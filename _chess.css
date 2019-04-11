@@ -1,0 +1,62 @@
+.casilla {
+    float: left;
+    width: 80px;
+    height: 80px;
+    margin: 0px;
+}
+
+.negra {
+    background: #ad8948;
+}
+
+.blanca {
+    background: #fafafa;
+}
+
+.TorreNegra {
+    background-image: url('./_IMG/8080/TorreNegra.png');
+}
+
+.TorreBlanca {
+    background-image: url('./_IMG/8080/TorreBlanca.png');
+}
+
+.AlfilNegro {
+    background-image: url('./_IMG/8080/AlfilNegro.png');
+}
+
+.AlfilBlanco {
+    background-image: url('./_IMG/8080/AlfilBlanco.png');
+}
+
+.ReyBlanco {
+    background-image: url('./_IMG/8080/ReyBlanco.png');
+}
+
+.ReyNegro {
+    background-image: url('./_IMG/8080/ReyNegro.png');
+}
+
+.CaballoNegro {
+    background-image: url('./_IMG/8080/CaballoNegro.png');
+}
+
+.CaballoBlanco {
+    background-image: url('./_IMG/8080/CaballoBlanco.png');
+}
+
+.ReinaNegra {
+    background-image: url('./_IMG/8080/ReinaNegra.png');
+}
+
+.ReinaBlanca {
+    background-image: url('./_IMG/8080/ReinaBlanca.png');
+}
+
+.PeonBlanco {
+    background-image: url('./_IMG/8080/PeonBlanco.png');
+}
+
+.PeonNegro {
+    background-image: url('./_IMG/8080/PeonNegro.png');
+}
