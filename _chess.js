@@ -29,39 +29,108 @@ var colocarPiezas = function(posicion) {
     }
 }
 
+var posiblesMovimientos = function(color) {
+    var movimientos = [];
+
+    if (color !== "Blancas" && color !== "Negras") {
+        console.error("Error - Color de piezas no reconocido");
+    } else {
+        var colorRival = color === "Blancas" ? "Negras" : "Blancas";
+
+        // Movimiento peones
+        $("div .Peon" + color).each(function (i) {
+            var posicion = this.id;
+
+            var letra = posicion.substr(0, 1);
+            var numero = parseInt(posicion.substr(1, 1));
+
+            // Si todavía no se ha movido, permitir dar dos pasos
+            if ((color === "Blancas" && posicion.endsWith("2")) || (color === "Negras" && posicion.endsWith("7"))) {
+                nuevoNumero = color === "Blancas" ? numero + 2 : numero - 2;
+                nuevaPosicion = letra + toString(nuevoNumero);
+                movimientos.push([posicion, nuevaPosicion]);
+            }
+
+            // Si no tengo ninguna pieza delante, permitir mover un paso siempre que no me salga del tablero
+            var nuevoNumero = color === "Blancas" ? numero + 1 : numero - 1;
+
+            if (nuevoNumero >= 1 && nuevoNumero <= 8) {
+                nuevaPosicion = letra + toString(nuevoNumero);
+                if ($("#" + nuevaPosicion).attr("class").split(" ").length <= 2) {
+                    // Si no he llegado al final, movimiento normal
+                    if (nuevoNumero !== 1 || nuevoNumero !== 8) {
+                        movimientos.push([posicion, nuevaPosicion]);
+                    } else {
+                        // Si he llegado al final, permite convertir el peón en Reina, Torre, Alfil o Caballo
+                        var piezasConvertir = ["Reina", "Torre", "Alfil", "Caballo"];
+                        for (var i = 0; i < piezasConvertir.length; i++) {
+                            movimientos.push([posicion, nuevaPosicion, piezasConvertir[i]]);
+                        }
+                    }
+                }
+            }
+
+            // Si encuentro una pieza enemiga en una diagonal inmediata, permitir comer
+            nuevoNumero = nuevoNumero;
+            var letras = ["a", "b", "c", "d", "e", "f", "g", "h"];
+            var posLetra = letras.indexOf(letra);
+
+            if (posLetra >= 1) {
+                var nuevaLetra = letras[posLetra - 1];
+                var nuevaPosicion = nuevaLetra + toString(nuevoNumero);
+                if ($("#" + nuevaPosicion + "[class$='" + colorRival + "']").length == 1) {
+                    movimientos.push([posicion, nuevaPosicion]);
+                }
+            }
+
+            if (posLetra < 8) {
+                var nuevaLetra = letras[posLetra + 1];
+                var nuevaPosicion = nuevaLetra + toString(nuevoNumero);
+                if ($("#" + nuevaPosicion + "[class$='" + colorRival + "']").length == 1) {
+                    movimientos.push([posicion, nuevaPosicion]);
+                }
+            }
+
+            // Comer al paso
+        });
+    }
+
+    return movimientos;
+}
+
 var posicion = {
-    "a8" : "TorreNegra",
-    "b8" : "CaballoNegro",
-    "c8" : "AlfilNegro",
-    "d8" : "ReinaNegra",
-    "e8" : "ReyNegro",
-    "f8" : "AlfilNegro",
-    "g8" : "CaballoNegro",
-    "h8" : "TorreNegra",
-    "a7" : "PeonNegro",
-    "b7" : "PeonNegro",
-    "c7" : "PeonNegro",
-    "d7" : "PeonNegro",
-    "e7" : "PeonNegro",
-    "f7" : "PeonNegro",
-    "g7" : "PeonNegro",
-    "h7" : "PeonNegro",
-    "a1" : "TorreBlanca",
-    "b1" : "CaballoBlanco",
-    "c1" : "AlfilBlanco",
-    "d1" : "ReinaBlanca",
-    "e1" : "ReyBlanco",
-    "f1" : "AlfilBlanco",
-    "g1" : "CaballoBlanco",
-    "h1" : "TorreBlanca",
-    "a2" : "PeonBlanco",
-    "b2" : "PeonBlanco",
-    "c2" : "PeonBlanco",
-    "d2" : "PeonBlanco",
-    "e2" : "PeonBlanco",
-    "f2" : "PeonBlanco",
-    "g2" : "PeonBlanco",
-    "h2" : "PeonBlanco"
+    "a8" : "TorreNegras",
+    "b8" : "CaballoNegras",
+    "c8" : "AlfilNegras",
+    "d8" : "ReinaNegras",
+    "e8" : "ReyNegras",
+    "f8" : "AlfilNegras",
+    "g8" : "CaballoNegras",
+    "h8" : "TorreNegras",
+    "a7" : "PeonNegras",
+    "b7" : "PeonNegras",
+    "c7" : "PeonNegras",
+    "d7" : "PeonNegras",
+    "e7" : "PeonNegras",
+    "f7" : "PeonNegras",
+    "g7" : "PeonNegras",
+    "h7" : "PeonNegras",
+    "a1" : "TorreBlancas",
+    "b1" : "CaballoBlancas",
+    "c1" : "AlfilBlancas",
+    "d1" : "ReinaBlancas",
+    "e1" : "ReyBlancas",
+    "f1" : "AlfilBlancas",
+    "g1" : "CaballoBlancas",
+    "h1" : "TorreBlancas",
+    "a2" : "PeonBlancas",
+    "b2" : "PeonBlancas",
+    "c2" : "PeonBlancas",
+    "d2" : "PeonBlancas",
+    "e2" : "PeonBlancas",
+    "f2" : "PeonBlancas",
+    "g2" : "PeonBlancas",
+    "h2" : "PeonBlancas"
 }
 
 generarTablero();
